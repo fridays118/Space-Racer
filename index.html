@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Racer</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <header>
+        <a href="#" onclick="newRace()">Play</a>
+        <a href="#">Store</a>
+        <a href="#">Ship</a>
+    </header>
+
+    <div id="gameplay">
+        <p id="enemyShip">>,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-</p>
+        <p id="playerShip">>,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-</p>
+        <button onclick="moveShip()">Drive!</button>
+        <button>NITRO</button>
+    </div>
+
+    <div id="gatcha">
+        <p id="cyberGold">Cyber Gold: 0</p>
+        <!--There will be random stats which range is based off of the rarity, if theyre ship is better tell them then scrap it for the stats added together-->
+        <button>Buy common ship [30 gold]</button>
+        <button>Buy rare ship [80 gold]</button>
+        <button>Buy legend ship [120 gold]</button>
+        <button>Buy epic ship [200 gold]</button>
+    </div>
+
+    <div id="ship">
+        <p id="ship"> -> </p> <!--Change color based on how good their stat sum is-->
+        <p id="speedStat">Speed: 5</p> <!--Amount jumped when the handles right-->
+        <p id="nitroStat">Nitro: 5</p> <!--When nitro is used jump the play x amount-->
+        <p id="handlingStat">Handling: 10</p> <!--Chance to move when button clicked-->
+
+        <button>Upgrade [100 gold]</button> <!--Add random amount to stats-->
+    </div>
+
+
+    <button onclick="RESET()">RESET</button>
+
+    <p id="console">CONSOLE: </p>
+
+</body>
+<script>
+
+    //random
+    function randomNum(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+    }
+
+    
+
+    //new player and reset handler
+    if (localStorage.getItem("newSRplayer") == "null"){
+        localStorage.setItem("newSRplayer", "notNew")
+    }
+    function RESET(){
+        localStorage.setItem("newSRplayer", null)
+        localStorage.setItem("speed", 1)
+        localStorage.setItem("handling", 1)
+        localStorage.setItem("nitro", 1)
+        location.reload()
+    }
+
+    //importing ids
+    const enemyShip = document.querySelector("#enemyShip")
+    const playerShip = document.querySelector("#playerShip")
+
+    //init
+        raceActive = false
+        playerX = 0
+        enemyX = 0
+        enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
+        playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
+
+
+    //new race
+    function newRace(){
+        raceActive = true
+        playerX = 0
+        enemyX = 0
+
+        //enemy stats(make random)
+        enemyShipSpeed = randomNum(1, 5)
+        enemyShipHandling = randomNum(1, 10)
+    }
+
+    //bot controller
+    setInterval(shipTick, 500)
+    function shipTick(){
+        if (raceActive && playerX <= playerShipTrack.length - 1 && enemyX <= enemyShipTrack.length - 1){
+            if (randomNum(0, 10) <= enemyShipHandling){
+                enemyX += enemyShipSpeed
+            }
+        }
+    }
+
+
+    //onTick
+    setInterval(onTick, 1);
+    function onTick(){
+        if (raceActive && playerX <= playerShipTrack.length - 1 && enemyX <= enemyShipTrack.length - 1){
+
+            //visual systme
+            enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
+            playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
+
+            enemyShipTrack[enemyX] = ">"
+            playerShipTrack[playerX] = ">"
+
+            enemyShip.textContent = enemyShipTrack
+            playerShip.textContent = playerShipTrack
+
+            //end game check
+
+        }
+    }
+
+    function moveShip(){
+        if (raceActive){
+            //add stats in
+            playerX += 1
+        }else{
+            newRace()
+        }
+        
+    }
+
+
+
+</script>
+</html>
