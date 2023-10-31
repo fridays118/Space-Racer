@@ -14,37 +14,25 @@
     </header>
 
     <div id="gameplay">
+        <h3 id="winner">Game Over</h3>
         <p id="enemyShip">>,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-</p>
         <p id="playerShip">>,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-</p>
         <button onclick="moveShip()">Drive!</button>
         <button>NITRO</button>
+        <button onclick="autogameFlick()">Auto</button>
     </div>
-
-    <div id="gatcha">
-        <p id="cyberGold">Cyber Gold: 0</p>
-        <!--There will be random stats which range is based off of the rarity, if theyre ship is better tell them then scrap it for the stats added together-->
-        <button>Buy common ship [30 gold]</button>
-        <button>Buy rare ship [80 gold]</button>
-        <button>Buy legend ship [120 gold]</button>
-        <button>Buy epic ship [200 gold]</button>
-    </div>
-
-    <div id="ship">
-        <p id="ship"> -> </p> <!--Change color based on how good their stat sum is-->
-        <p id="speedStat">Speed: 5</p> <!--Amount jumped when the handles right-->
-        <p id="nitroStat">Nitro: 5</p> <!--When nitro is used jump the play x amount-->
-        <p id="handlingStat">Handling: 10</p> <!--Chance to move when button clicked-->
-
-        <button>Upgrade [100 gold]</button> <!--Add random amount to stats-->
-    </div>
-
 
     <button onclick="RESET()">RESET</button>
 
     <p id="console">CONSOLE: </p>
 
 </body>
+
+<!--JAVASCRIPT-->
+
 <script>
+    //getting css vars
+    let root = document.documentElement;
 
     //random
     function randomNum(min, max) {
@@ -61,9 +49,10 @@
     }
     function RESET(){
         localStorage.setItem("newSRplayer", null)
-        localStorage.setItem("speed", 1)
-        localStorage.setItem("handling", 1)
-        localStorage.setItem("nitro", 1)
+        localStorage.setItem("SRspeed", 1)
+        localStorage.setItem("SRhandling", 1)
+        localStorage.setItem("SRnitro", 1)
+        localStorage.setItem("SRcyberGold", 0)
         location.reload()
     }
 
@@ -71,7 +60,9 @@
     const enemyShip = document.querySelector("#enemyShip")
     const playerShip = document.querySelector("#playerShip")
 
+
     //init
+        autoGame = false
         raceActive = false
         playerX = 0
         enemyX = 0
@@ -84,27 +75,67 @@
         raceActive = true
         playerX = 0
         enemyX = 0
+        root.style.setProperty('--winnerDisplay', "none");
+
+        document.querySelector("#console").textContent = "CONSOLE: RACING!!"
 
         //enemy stats(make random)
         enemyShipSpeed = randomNum(1, 5)
         enemyShipHandling = randomNum(1, 10)
     }
+    
+    function raceOver(){
+        if (raceActive){
+            root.style.setProperty('--winnerDisplay', "unset");
+            raceActive = false
+            if (playerX >= playerShipTrack.length - 1){
+                var gamtgain = randomNum(1, 20)
+                localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) + gamtgain)
+                document.querySelector("#console").textContent = ("CONSOLE: " + "You have gained " + gamtgain + " cyber gold!")
+            }else{
+                document.querySelector("#console").textContent = "CONSOLE: You lost :("
+            }
+        }
+        
+    }
+
+    //autoController
+    function autogameFlick(){
+        if (autoGame){
+            autoGame = false
+            document.querySelector("#console").textContent = "CONSOLE: Auto off"
+        }else if (autoGame == false){
+            newRace()
+            document.querySelector("#console").textContent = "CONSOLE: Auto on"
+        }
+    }
+
 
     //bot controller
     setInterval(shipTick, 500)
     function shipTick(){
-        if (raceActive && playerX <= playerShipTrack.length - 1 && enemyX <= enemyShipTrack.length - 1){
+        if (raceActive){
             if (randomNum(0, 10) <= enemyShipHandling){
                 enemyX += enemyShipSpeed
             }
         }
+        
+    }
+
+        //player controller
+    setInterval(playerShipController, 250)
+    function playerShipController(){
+        if (autoGame){
+            moveShip()
+        }
+        
     }
 
 
     //onTick
     setInterval(onTick, 1);
     function onTick(){
-        if (raceActive && playerX <= playerShipTrack.length - 1 && enemyX <= enemyShipTrack.length - 1){
+        if (raceActive){
 
             //visual systme
             enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
@@ -119,13 +150,17 @@
             //end game check
 
         }
+
+        if (playerX >= playerShipTrack.length - 1 || enemyX >= enemyShipTrack.length - 1){
+            raceOver()
+        }
     }
 
     function moveShip(){
         if (raceActive){
             //add stats in
-            if (randomNum(0, 10) <= parseInt(localStorage.getItem("handling"))){
-                playerX += parseInt(localStorage.getItem("speed"))
+            if (randomNum(0, 10) <= parseInt(localStorage.getItem("SRhandling"))){
+                playerX += parseInt(localStorage.getItem("SRspeed"))
             }
         }else{
             newRace()

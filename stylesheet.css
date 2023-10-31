@@ -1,0 +1,23 @@
+:root{
+    --winnerDisplay: none
+}
+
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+    background-color:cadetblue;
+}
+#gameplay{
+    background-color: gray;
+    width: fit-content;
+    padding: 2vh;
+    border-radius: 25px;
+    border: 2px solid whitesmoke;
+}
+#winner{
+    display: var(--winnerDisplay);
+}
