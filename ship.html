@@ -4,15 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Racer - Ship</title>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
+    <header>
+        <a href="index.html" onclick="newRace()">Play</a>
+        <a href="ship.html">Ship</a>
+        <a href="store.html">Store</a>
+        <a href="settings.html">Settings</a>
+    </header>
+
     <div id="ship">
-        <p id="ship"> -> </p> <!--Change color based on how good their stat sum is-->
+        <p id="ship"> 🚀 </p> <!--Change color based on how good their stat sum is-->
+        <p id="suns">☀️: 2</p>
         <p id="speedStat">Speed: 5</p> <!--Amount jumped when the handles right-->
         <p id="nitroStat">Nitro: 5</p> <!--When nitro is used jump the play x amount-->
         <p id="handlingStat">Handling: 10</p> <!--Chance to move when button clicked-->
 
-        <button>Upgrade [100 gold]</button> <!--Add random amount to stats-->
+        <button onclick="UpgradeShip()">Upgrade [100 ☀️]</button> <!--Add random amount to stats-->
     </div>
+
+    <p id="console">CONSOLE: . . .</p>
 </body>
+
+<script>
+
+    //random
+    function randomNum(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+    }
+
+
+    setInterval(onTick, 1)
+    function onTick(){
+        document.querySelector("#speedStat").textContent = "Speed: " + localStorage.getItem("SRspeed")
+        document.querySelector("#handlingStat").textContent = "Handling: " + localStorage.getItem("SRhandling")
+        document.querySelector("#nitroStat").textContent = "Nitro: " + localStorage.getItem("SRnitro")
+        document.querySelector("#suns").textContent = "☀️: " + localStorage.getItem("SRcyberGold")
+    }
+
+
+    function UpgradeShip(){
+        if (parseInt(localStorage.getItem("SRcyberGold")) >= 100){
+            localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) - 100)
+            rngStat = randomNum(1, 3)
+            rngAmt = randomNum(1, 2)
+
+            if (rngStat == 1){
+                if (parseInt(localStorage.getItem("SRspeed")) + rngAmt < 4){
+                    localStorage.setItem("SRspeed", parseInt(localStorage.getItem("SRspeed")) + rngAmt)
+                    document.querySelector("#console").textContent = "CONSOLE: Speed [+]"
+                }else{
+                    localStorage.setItem("SRspeed", 4)
+                    document.querySelector("#console").textContent = "CONSOLE: Speed [[MAX]]"
+                }
+
+            }else if (rngStat == 2){
+                if (parseInt(localStorage.getItem("SRhandling")) + rngAmt < 10){
+                    localStorage.setItem("SRhandling", parseInt(localStorage.getItem("SRhandling")) + rngAmt)
+                    document.querySelector("#console").textContent = "CONSOLE: Handling [+]"
+                }else{
+                    localStorage.setItem("SRhandling", 10)
+                    document.querySelector("#console").textContent = "CONSOLE: Handling [[MAX]]"
+                }
+            }else if (rngStat == 3){
+                if (parseInt(localStorage.getItem("SRnitro")) + rngAmt < 3){
+                    localStorage.setItem("SRnitro", parseInt(localStorage.getItem("SRnitro")) + rngAmt)
+                    document.querySelector("#console").textContent = "CONSOLE: Nitro [+]"
+                }else{
+                    localStorage.setItem("SRnitro", 3)
+                    document.querySelector("#console").textContent = "CONSOLE: Nitro [[MAX]]"
+                }
+            }
+        }
+    }
+</script>
+
+
+
 </html>

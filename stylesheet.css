@@ -2,17 +2,43 @@
     --winnerDisplay: none
 }
 
+header{
+    background-color: aliceblue;
+    width: 100%;
+    padding: 1vh;
+    color: black;
+}
+header a{
+    color: black;
+}
+
+button{
+    border: 2px solid whitesmoke;
+    background-color: black;
+    color: aliceblue;
+}
 
 body{
     display: flex;
+    padding: 0px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1vh;
-    background-color:cadetblue;
+    background-color:black;
+    color: aliceblue;
 }
+
+#gatcha{
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+
 #gameplay{
-    background-color: gray;
+    background-color: black;
+    color: aliceblue;
     width: fit-content;
     padding: 2vh;
     border-radius: 25px;
