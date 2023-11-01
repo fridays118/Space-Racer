@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Racer - Settings</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" onclick="newRace()">Play</a>
+        <a href="ship.html">Ship</a>
+        <a href="store.html">Store</a>
+        <a href="settings.html">Settings</a>
+    </header>
+
+    <ul>
+        <a href="index.html" onclick="RESET()"><li>Reset</li></a>
+        <a href="ship.html" onclick="moneyCheat()"><li>Money Cheat</li></a>
+    </ul>
+</body>
+
+<script>
+    function RESET(){
+        localStorage.setItem("newSRplayer", null)
+        localStorage.setItem("SRspeed", 1)
+        localStorage.setItem("SRhandling", 1)
+        localStorage.setItem("SRnitro", 1)
+        localStorage.setItem("SRcyberGold", 0)
+        location.reload()
+    }
+
+    function moneyCheat(){
+        localStorage.setItem("SRcyberGold", 10000)
+    }
+</script>
+</html>

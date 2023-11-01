@@ -8,21 +8,22 @@
 </head>
 <body>
     <header>
-        <a href="#" onclick="newRace()">Play</a>
-        <a href="#">Store</a>
-        <a href="#">Ship</a>
+        <a href="index.html" onclick="newRace()">Play</a>
+        <a href="ship.html">Ship</a>
+        <a href="store.html">Store</a>
+        <a href="settings.html">Settings</a>
     </header>
 
     <div id="gameplay">
         <h3 id="winner">Game Over</h3>
-        <p id="enemyShip">>,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-</p>
-        <p id="playerShip">>,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-</p>
+        <p id="enemyShip">🛸------------------------</p>
+        <p id="playerShip">🚀------------------------
+
+        </p>
         <button onclick="moveShip()">Drive!</button>
         <button>NITRO</button>
-        <button onclick="autogameFlick()">Auto</button>
+        <button id="autoButton" onclick="autogameFlick()">Auto</button>
     </div>
-
-    <button onclick="RESET()">RESET</button>
 
     <p id="console">CONSOLE: </p>
 
@@ -38,7 +39,7 @@
     function randomNum(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+        return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
     }
 
     
@@ -46,14 +47,6 @@
     //new player and reset handler
     if (localStorage.getItem("newSRplayer") == "null"){
         localStorage.setItem("newSRplayer", "notNew")
-    }
-    function RESET(){
-        localStorage.setItem("newSRplayer", null)
-        localStorage.setItem("SRspeed", 1)
-        localStorage.setItem("SRhandling", 1)
-        localStorage.setItem("SRnitro", 1)
-        localStorage.setItem("SRcyberGold", 0)
-        location.reload()
     }
 
     //importing ids
@@ -77,7 +70,12 @@
         enemyX = 0
         root.style.setProperty('--winnerDisplay', "none");
 
-        document.querySelector("#console").textContent = "CONSOLE: RACING!!"
+        if (autoGame){
+            document.querySelector("#console").textContent = "CONSOLE: AUTO RACING!!"
+        }else{
+            document.querySelector("#console").textContent = "CONSOLE: RACING!!"
+        }
+        
 
         //enemy stats(make random)
         enemyShipSpeed = randomNum(1, 5)
@@ -91,7 +89,7 @@
             if (playerX >= playerShipTrack.length - 1){
                 var gamtgain = randomNum(1, 20)
                 localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) + gamtgain)
-                document.querySelector("#console").textContent = ("CONSOLE: " + "You have gained " + gamtgain + " cyber gold!")
+                document.querySelector("#console").textContent = ("CONSOLE: " + "You have gained " + gamtgain + " ☀️!")
             }else{
                 document.querySelector("#console").textContent = "CONSOLE: You lost :("
             }
@@ -103,10 +101,9 @@
     function autogameFlick(){
         if (autoGame){
             autoGame = false
-            document.querySelector("#console").textContent = "CONSOLE: Auto off"
         }else if (autoGame == false){
             newRace()
-            document.querySelector("#console").textContent = "CONSOLE: Auto on"
+            autoGame = true
         }
     }
 
@@ -125,8 +122,10 @@
         //player controller
     setInterval(playerShipController, 250)
     function playerShipController(){
-        if (autoGame){
+        if (autoGame && raceActive){
             moveShip()
+        }else if (raceActive == false && autoGame){
+            newRace()
         }
         
     }
@@ -135,17 +134,22 @@
     //onTick
     setInterval(onTick, 1);
     function onTick(){
+        if (autoGame){
+            document.querySelector("#autoButton").textContent = "Auto [on]"
+        }else{
+            document.querySelector("#autoButton").textContent = "Auto [off]"
+        }
         if (raceActive){
 
             //visual systme
             enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
             playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
 
-            enemyShipTrack[enemyX] = ">"
-            playerShipTrack[playerX] = ">"
+            enemyShipTrack[enemyX] = "🛸"
+            playerShipTrack[playerX] = "🚀"
 
-            enemyShip.textContent = enemyShipTrack
-            playerShip.textContent = playerShipTrack
+            enemyShip.textContent = enemyShipTrack.join("")
+            playerShip.textContent = playerShipTrack.join("")
 
             //end game check
 

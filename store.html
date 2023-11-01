@@ -4,15 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Space Racer - Shop</title>
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    <div id="gatcha">
-        <p id="cyberGold">Cyber Gold: 0</p>
-        <!--There will be random stats which range is based off of the rarity, if theyre ship is better tell them then scrap it for the stats added together-->
-        <button>Buy common ship [30 gold]</button>
-        <button>Buy rare ship [80 gold]</button>
-        <button>Buy legend ship [120 gold]</button>
-        <button>Buy epic ship [200 gold]</button>
-    </div>
+    <header>
+        <a href="index.html" onclick="newRace()">Play</a>
+        <a href="ship.html">Ship</a>
+        <a href="store.html">Store</a>
+        <a href="settings.html">Settings</a>
+    </header>
+        <div id="gatcha">
+            <p id="suns">☀️: 0</p>
+            <!--There will be random stats which range is based off of the rarity, if theyre ship is better tell them then scrap it for the stats added together-->
+            <button onclick="common()">Buy common ship [60 ☀️]</button>
+            <button onclick="rare()">Buy rare ship [120 ☀️]</button>
+            <button onclick="legend()">Buy legend ship [180 ☀️]</button>
+            <button onclick="epic()">Buy epic ship [220 ☀️]</button>
+        </div>
+
+        <p id="console">CONSOLE: . . .</p>
 </body>
+
+<script>
+
+    setInterval(onTick, 1)
+    function onTick(){
+        document.querySelector("#suns").textContent = "☀️: " + localStorage.getItem("SRcyberGold")
+    }
+
+    //random
+    function randomNum(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+    }
+
+    function makeShip(quality){
+        localStorage.setItem("SRspeed", randomNum(quality, 4))
+        localStorage.setItem("SRhandling", randomNum(quality, 10))
+        localStorage.setItem("SRnitro", randomNum(quality, 3))
+        
+        document.querySelector("#console").textContent = "CONSOLE: New ship purchased! See it in the ships tab."
+    }
+
+
+    function purchaseShip(price , QL){
+        if (parseInt(localStorage.getItem("SRcybergold")) >= price){
+            localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) - price)
+            makeShip(QL)
+        }else if(parseInt(localStorage.getItem("SRcybergold")) < price){
+            document.querySelector("#console").textContent = "CONSOLE: You dont have that much!"
+        }else{
+            document.querySelector("#console").textContent = "CONSOLE: !"
+
+        }
+        
+    }
+
+
+    function common(){
+        purchaseShip(60, 1)
+    }
+
+
+
+</script>
+
+
+
 </html>
