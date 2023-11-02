@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Space Racer</title>
+    <title>☄️Space Racer☀️</title>
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
@@ -106,6 +106,11 @@
         //enemy stats(make random)
         enemyShipSpeed = randomNum(1, 5)
         enemyShipHandling = randomNum(1, 10)
+        enemyNitro = randomNum(1, 5)
+        enemyHasNitro = true
+
+        enemyShipIco = "1️⃣🛸"
+        playerShipIco = "1️⃣🚀"
     }
     
     function raceOver(){
@@ -133,6 +138,8 @@
         }
     }
 
+    //enemyNitro = randomNum(1, 5)
+    //enemyHasNitro = true
 
     //bot controller
     setInterval(shipTick, 500)
@@ -140,6 +147,13 @@
         if (raceActive){
             if (randomNum(0, 10) <= enemyShipHandling){
                 enemyX += enemyShipSpeed
+                if (enemyHasNitro){
+                    if (randomNum(1, 5) == 1){
+                        enemyHasNitro = false
+                        enemyX += enemyNitro
+                        enemyShipIco = "🔥🛸"
+                    }
+                }
             }
         }
         
@@ -162,10 +176,10 @@
     function onTick(){
         if (autoGame){
             document.querySelector("#autoButton").textContent = "Auto [on]"
-            document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer"
+            document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer☄️"
         }else{
             document.querySelector("#autoButton").textContent = "Auto [off]"
-            document.title = "Space Racer"
+            document.title = "☄️Space Racer☀️"
         }
         if (raceActive){
 
@@ -173,8 +187,8 @@
             enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
             playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
 
-            enemyShipTrack[enemyX] = "🛸"
-            playerShipTrack[playerX] = "🚀"
+            enemyShipTrack[enemyX] = enemyShipIco
+            playerShipTrack[playerX] = playerShipIco
 
             enemyShip.textContent = enemyShipTrack.join("")
             playerShip.textContent = playerShipTrack.join("")
@@ -204,13 +218,12 @@
     function nitroUse(){
         if (hasNitro && raceActive){
             hasNitro = false
+            playerShipIco = "🔥🚀"
             playerX += parseInt(localStorage.getItem("SRnitro")) 
             document.querySelector("#console").textContent = "CONSOLE: NITRO!!"
             document.querySelector("#nitroButton").textContent = "Nitro [0]"
         }
     }
-
-
 
 </script>
 </html>
