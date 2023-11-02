@@ -40,19 +40,33 @@
     }
 
     function makeShip(quality){
+        qstring = "MT"
+        if (quality == 1){
+            qstring = "Common"
+        }else if (quality == 2){
+            qstring = "Rare"
+        }else if (quality == 3){
+            qstring = "Legend"
+        }else if (quality == 4){
+            qstring = "Epic"
+        }
+
+        
         localStorage.setItem("SRspeed", randomNum(quality, 4))
         localStorage.setItem("SRhandling", randomNum(quality, 10))
         localStorage.setItem("SRnitro", randomNum(quality, 3))
         
-        document.querySelector("#console").textContent = "CONSOLE: New ship purchased! See it in the ships tab."
+        document.querySelector("#console").textContent = "CONSOLE: New " + qstring + " ship purchased! See it in the ships tab."
     }
 
 
-    function purchaseShip(price , QL){
-        if (parseInt(localStorage.getItem("SRcybergold")) >= price){
+    function purchaseShip(price , QQL){
+        SRCGamt = parseInt(localStorage.getItem("SRcyberGold"))
+        
+        if (SRCGamt >= price){
             localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) - price)
-            makeShip(QL)
-        }else if(parseInt(localStorage.getItem("SRcybergold")) < price){
+            makeShip(QQL)
+        }else if(SRCGamt < price){
             document.querySelector("#console").textContent = "CONSOLE: You dont have that much!"
         }else{
             document.querySelector("#console").textContent = "CONSOLE: !"
@@ -64,6 +78,15 @@
 
     function common(){
         purchaseShip(60, 1)
+    }
+    function rare(){
+        purchaseShip(120, 2)
+    }
+    function legend(){
+        purchaseShip(180, 3)
+    }
+    function epic(){
+        purchaseShip(220, 4)
     }
 
 

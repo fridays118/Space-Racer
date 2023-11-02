@@ -23,8 +23,9 @@
 
         <button onclick="UpgradeShip()">Upgrade [100 ☀️]</button> <!--Add random amount to stats-->
     </div>
-
+    <button onclick="moreInfo()">Info</button>
     <p id="console">CONSOLE: . . .</p>
+    
 </body>
 
 <script>
@@ -81,6 +82,17 @@
         }else{
             document.querySelector("#console").textContent = "CONSOLE: You dont have enough to upgrade"
         }
+    }
+
+
+    function moreInfo(){
+        alert("Heres some helpful info about the game")
+        alert("To gain ☀️'s you need to win races")
+        alert("Handling controls your rng chance to move while racing")
+        alert("Speed controls how far you move when your handling check passes")
+        alert("Nitro controls how far you go when using your nitro")
+        alert("Upgrading will increase a random stat by a random amount up to its max")
+        alert("Enjoy :)")
     }
 </script>
 
