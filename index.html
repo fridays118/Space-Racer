@@ -8,11 +8,16 @@
 </head>
 <body>
     <header>
-        <a href="index.html" onclick="newRace()">Play</a>
-        <a href="ship.html">Ship</a>
-        <a href="store.html">Store</a>
-        <a href="settings.html">Settings</a>
+        <h3>Space Racer</h3>
+        <div>
+            <a href="index.html" onclick="newRace()">Play</a>
+            <a href="ship.html">Ship</a>
+            <a href="store.html">Store</a>
+            <a href="settings.html">Settings</a>
+        </div>
     </header>
+
+    <h1>Space Racer</h1>
 
     <div id="gameplay">
         <h3 id="winner">Game Over</h3>
@@ -48,8 +53,18 @@
     
 
     //new player and reset handler
-    if (localStorage.getItem("newSRplayer") == "null"){
+    if (localStorage.getItem("newSRplayer") == "null" || localStorage.getItem("newSRplayer") == null){
         localStorage.setItem("newSRplayer", "notNew")
+        RESET()
+    }
+
+    function RESET(){
+        localStorage.setItem("newSRplayer", null)
+        localStorage.setItem("SRspeed", 1)
+        localStorage.setItem("SRhandling", 1)
+        localStorage.setItem("SRnitro", 1)
+        localStorage.setItem("SRcyberGold", 0)
+        location.reload()
     }
 
     //importing ids
@@ -180,7 +195,7 @@
 
 
     function nitroUse(){
-        if (hasNitro){
+        if (hasNitro && raceActive){
             hasNitro = false
             playerX += parseInt(localStorage.getItem("SRnitro")) 
             document.querySelector("#console").textContent = "CONSOLE: NITRO!!"

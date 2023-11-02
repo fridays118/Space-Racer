@@ -8,11 +8,16 @@
 </head>
 <body>
     <header>
-        <a href="index.html" onclick="newRace()">Play</a>
-        <a href="ship.html">Ship</a>
-        <a href="store.html">Store</a>
-        <a href="settings.html">Settings</a>
+        <h3>Space Racer</h3>
+        <div>
+            <a href="index.html" onclick="newRace()">Play</a>
+            <a href="ship.html">Ship</a>
+            <a href="store.html">Store</a>
+            <a href="settings.html">Settings</a>
+        </div>
     </header>
+
+    <h1>Ship</h1>
 
     <div id="ship">
         <p id="ship"> 🚀 </p> <!--Change color based on how good their stat sum is-->
@@ -40,9 +45,9 @@
 
     setInterval(onTick, 1)
     function onTick(){
-        document.querySelector("#speedStat").textContent = "Speed: " + localStorage.getItem("SRspeed")
-        document.querySelector("#handlingStat").textContent = "Handling: " + localStorage.getItem("SRhandling")
-        document.querySelector("#nitroStat").textContent = "Nitro: " + localStorage.getItem("SRnitro")
+        document.querySelector("#speedStat").textContent = "Speed: " + localStorage.getItem("SRspeed") + " / 4"
+        document.querySelector("#handlingStat").textContent = "Handling: " + localStorage.getItem("SRhandling") + " / 10"
+        document.querySelector("#nitroStat").textContent = "Nitro: " + localStorage.getItem("SRnitro") + " / 3"
         document.querySelector("#suns").textContent = "☀️: " + localStorage.getItem("SRcyberGold")
     }
 
