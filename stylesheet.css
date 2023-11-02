@@ -74,7 +74,9 @@ body{
     justify-content: center;
     align-items: center;
     gap: 1vh;
-    background-color:black;
+    background-image: url(seamless\ space.png);
+    padding:0;
+    background-repeat: repeat;
     color: aliceblue;
     font-family: mega-trans;
 }
