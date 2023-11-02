@@ -42,7 +42,7 @@ body{
     width: fit-content;
     padding: 2vh;
     border-radius: 25px;
-    border: 2px solid whitesmoke;
+    border: 2px dashed whitesmoke;
 }
 #winner{
     display: var(--winnerDisplay);

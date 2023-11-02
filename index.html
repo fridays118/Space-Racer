@@ -20,9 +20,12 @@
         <p id="playerShip">🚀------------------------
 
         </p>
-        <button onclick="moveShip()">Drive!</button>
-        <button>NITRO</button>
-        <button id="autoButton" onclick="autogameFlick()">Auto</button>
+
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+            <button onclick="moveShip()">Drive!</button>
+            <button id="nitroButton" onclick="nitroUse()">Nitro [1]</button>
+            <button id="autoButton" onclick="autogameFlick()">Auto</button>
+        </div>
     </div>
 
     <p id="console">CONSOLE: </p>
@@ -56,6 +59,7 @@
 
     //init
         autoGame = false
+        hasNitro = false
         raceActive = false
         playerX = 0
         enemyX = 0
@@ -65,6 +69,8 @@
 
     //new race
     function newRace(){
+        hasNitro = true
+        document.querySelector("#nitroButton").textContent = "Nitro [1]"
         raceActive = true
         playerX = 0
         enemyX = 0
@@ -170,6 +176,16 @@
             newRace()
         }
         
+    }
+
+
+    function nitroUse(){
+        if (hasNitro){
+            hasNitro = false
+            playerX += parseInt(localStorage.getItem("SRnitro")) 
+            document.querySelector("#console").textContent = "CONSOLE: NITRO!!"
+            document.querySelector("#nitroButton").textContent = "Nitro [0]"
+        }
     }
 
 
