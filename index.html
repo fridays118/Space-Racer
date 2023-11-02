@@ -17,7 +17,7 @@
         </div>
     </header>
 
-    <h1>Space Racer</h1>
+    <h1>Space Racer🚀</h1>
 
     <div id="gameplay">
         <h3 id="winner">Game Over</h3>
@@ -33,7 +33,11 @@
         </div>
     </div>
 
-    <p id="console">CONSOLE: </p>
+    <p id="console">CONSOLE: Lets see how your 🚀 does</p>
+
+    <footer>
+        <p>Made by fridays18</p>
+    </footer>
 
 </body>
 
@@ -156,8 +160,10 @@
     function onTick(){
         if (autoGame){
             document.querySelector("#autoButton").textContent = "Auto [on]"
+            document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer"
         }else{
             document.querySelector("#autoButton").textContent = "Auto [off]"
+            document.title = "Space Racer"
         }
         if (raceActive){
 
