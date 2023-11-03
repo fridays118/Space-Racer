@@ -51,6 +51,14 @@ h3, h2, h1{
     font-family: dash-horizon;
 }
 
+button:hover{
+    border-color: blue;
+}
+a:hover{
+    color: white;
+    background-color: black;
+}
+
 strong{
     color: red;
 }
