@@ -160,6 +160,19 @@ header h3{
         width: 80vw;
       }
   } 
+  @media only screen and (max-width: 300px) {
+    #gameplay{
+        font-size: small;
+    }
+    #gameplay button{
+        font-size: x-small;
+    }
+  }
+  @media only screen and (max-width: 290px) {
+    #gameplay{
+        font-size: xx-small;
+    }
+  }
 
 
   @media only screen and (min-width: 768px) {
