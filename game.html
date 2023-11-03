@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☄️Space Racer☀️</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>">
+</head>
+<body>
+    <header>
+        <h3>Space Racer</h3>
+        <div>
+            <a href="game.html" onclick="newRace()">Play</a>
+            <a href="ship.html">Ship</a>
+            <a href="store.html">Store</a>
+            <a href="index.html">Menu</a>
+            <a href="settings.html">Settings</a>
+        </div>
+    </header>
+
+    <div id="mainGameArea">
+        
+
+    <h1>Space Racer🚀</h1>
+
+    <div id="gameplay">
+        <div>
+            <p id="enemyShip">1️⃣🛸------------------------🏁</p>
+            <p id="playerShip">1️⃣🚀------------------------🏁</p>
+    </div>
+
+        <div style="display: flex; flex-direction: column; gap: 3px;">
+            <button onclick="moveShip()">Drive!</button>
+            <button id="nitroButton" onclick="nitroUse()">Nitro [1]</button>
+            <button id="autoButton" onclick="autogameFlick()">Auto</button>
+        </div>
+    </div>
+
+    <p id="console">CONSOLE: Lets see how your 🚀 does</p>
+
+</div>
+
+    <footer>
+        <p>Made by fridays18</p>
+    </footer>
+
+</body>
+
+<!--JAVASCRIPT-->
+
+<script>
+    //getting css vars
+    let root = document.documentElement;
+
+    //random
+    function randomNum(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+    }
+
+    
+
+    //new player and reset handler
+    if (localStorage.getItem("newSRplayer") == "null" || localStorage.getItem("newSRplayer") == null){
+        localStorage.setItem("newSRplayer", "notNew")
+        RESET()
+    }
+
+    function RESET(){
+        localStorage.setItem("SRspeed", 1)
+        localStorage.setItem("SRhandling", 1)
+        localStorage.setItem("SRnitro", 1)
+        localStorage.setItem("SRcyberGold", 0)
+        location.reload()
+    }
+
+    //importing ids
+    const enemyShip = document.querySelector("#enemyShip")
+    const playerShip = document.querySelector("#playerShip")
+
+
+    //init
+        autoGame = false
+        hasNitro = false
+        raceActive = false
+        playerX = 0
+        enemyX = 0
+        enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "🏁"]
+        playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "🏁"]
+
+
+    //new race
+    function newRace(){
+        hasNitro = true
+        document.querySelector("#nitroButton").textContent = "Nitro [1]"
+        raceActive = true
+        playerX = 0
+        enemyX = 0
+
+        if (autoGame){
+            document.querySelector("#console").textContent = "CONSOLE: AUTO RACING!!"
+        }else{
+            document.querySelector("#console").textContent = "CONSOLE: RACING!!"
+        }
+        
+
+        //enemy stats(make random)
+        enemyShipSpeed = randomNum(1, 5)
+        enemyShipHandling = randomNum(1, 10)
+        enemyNitro = randomNum(1, 5)
+        enemyHasNitro = true
+
+        enemyShipIco = "1️⃣🛸"
+        playerShipIco = "1️⃣🚀"
+    }
+    
+    function raceOver(){
+        if (raceActive){
+            raceActive = false
+            if (playerX >= playerShipTrack.length - 1){
+                var gamtgain = randomNum(1, 20)
+                localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) + gamtgain)
+                document.querySelector("#console").textContent = ("CONSOLE: " + "You have gained " + gamtgain + " ☀️!")
+                enemyShipIco = "❎🛸"
+                playerShipIco = "✅🚀"
+            }else{
+                document.querySelector("#console").textContent = "CONSOLE: You lost :("
+                enemyShipIco = "✅🛸"
+                playerShipIco = "❎🚀"
+            }
+        }
+        
+    }
+
+    //autoController
+    function autogameFlick(){
+        if (autoGame){
+            autoGame = false
+        }else if (autoGame == false){
+            newRace()
+            autoGame = true
+        }
+    }
+
+    //enemyNitro = randomNum(1, 5)
+    //enemyHasNitro = true
+
+    //bot controller
+    setInterval(shipTick, 500)
+    function shipTick(){
+        if (raceActive){
+            if (randomNum(0, 10) <= enemyShipHandling){
+                enemyX += enemyShipSpeed
+                if (enemyHasNitro){
+                    if (randomNum(1, 5) == 1){
+                        enemyHasNitro = false
+                        enemyX += enemyNitro
+                        enemyShipIco = "🔥🛸"
+                    }
+                }
+            }
+        }
+        
+    }
+
+        //player controller
+    setInterval(playerShipController, 250)
+    function playerShipController(){
+        if (autoGame && raceActive){
+            moveShip()
+        }else if (raceActive == false && autoGame){
+            newRace()
+        }
+        
+    }
+
+
+    //onTick
+    setInterval(onTick, 1);
+    function onTick(){
+        if (autoGame){
+            document.querySelector("#autoButton").textContent = "Auto [on]"
+            document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer☄️"
+        }else{
+            document.querySelector("#autoButton").textContent = "Auto [off]"
+            document.title = "☄️Space Racer☀️"
+        }
+
+
+        if (playerX >= playerShipTrack.length - 1 || enemyX >= enemyShipTrack.length - 1){
+            raceOver()
+        }
+
+
+
+        //visual system
+        enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "🏁"]
+        playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "🏁"]
+
+            enemyShipTrack[enemyX] = enemyShipIco
+            playerShipTrack[playerX] = playerShipIco
+
+            enemyShip.textContent = enemyShipTrack.join("")
+            playerShip.textContent = playerShipTrack.join("")
+    }
+
+    function moveShip(){
+        if (raceActive){
+            //add stats in
+            if (randomNum(0, 10) <= parseInt(localStorage.getItem("SRhandling"))){
+                playerX += parseInt(localStorage.getItem("SRspeed"))
+            }
+        }else{
+            newRace()
+        }
+        
+    }
+
+
+    function nitroUse(){
+        if (hasNitro && raceActive){
+            hasNitro = false
+            playerShipIco = "🔥🚀"
+            playerX += parseInt(localStorage.getItem("SRnitro")) 
+            document.querySelector("#console").textContent = "CONSOLE: NITRO!!"
+            document.querySelector("#nitroButton").textContent = "Nitro [0]"
+        }
+    }
+
+</script>
+</html>

@@ -11,220 +11,27 @@
     <header>
         <h3>Space Racer</h3>
         <div>
-            <a href="index.html" onclick="newRace()">Play</a>
+            <a href="game.html" onclick="newRace()">Play</a>
             <a href="ship.html">Ship</a>
             <a href="store.html">Store</a>
+            <a href="index.html">Menu</a>
             <a href="settings.html">Settings</a>
         </div>
     </header>
 
-    <body>
-        
-    <h1>Space Racer🚀</h1>
-
-    <div id="gameplay">
-        <h3 id="winner">Game Over</h3>
-        <p id="enemyShip">🛸------------------------</p>
-        <p id="playerShip">🚀------------------------
-
+    <div id="intro">
+        <h1>Welcome to Space Racer</h1>
+        <p>Space racer is a simple space gatcha racing game.
+            The objective of this game is to upgrade and buy new ships in order to beat the aliens racing against you.
+            This can be done by repeatedly pressing the Race button the the play section (or just turning on auto).
+            If you are curious about the racing specifics check out the info button in the Ship tab.
+            I hope you enjoy and have fun racer you got this! - F18
         </p>
-
-        <div style="display: flex; flex-direction: column; gap: 3px;">
-            <button onclick="moveShip()">Drive!</button>
-            <button id="nitroButton" onclick="nitroUse()">Nitro [1]</button>
-            <button id="autoButton" onclick="autogameFlick()">Auto</button>
-        </div>
     </div>
-
-    <p id="console">CONSOLE: Lets see how your 🚀 does</p>
 
     <footer>
         <p>Made by fridays18</p>
     </footer>
 
 </body>
-
-<!--JAVASCRIPT-->
-
-<script>
-    //getting css vars
-    let root = document.documentElement;
-
-    //random
-    function randomNum(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-    }
-
-    
-
-    //new player and reset handler
-    if (localStorage.getItem("newSRplayer") == "null" || localStorage.getItem("newSRplayer") == null){
-        localStorage.setItem("newSRplayer", "notNew")
-        RESET()
-    }
-
-    function RESET(){
-        localStorage.setItem("SRspeed", 1)
-        localStorage.setItem("SRhandling", 1)
-        localStorage.setItem("SRnitro", 1)
-        localStorage.setItem("SRcyberGold", 0)
-        location.reload()
-    }
-
-    //importing ids
-    const enemyShip = document.querySelector("#enemyShip")
-    const playerShip = document.querySelector("#playerShip")
-
-
-    //init
-        autoGame = false
-        hasNitro = false
-        raceActive = false
-        playerX = 0
-        enemyX = 0
-        enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
-        playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
-
-
-    //new race
-    function newRace(){
-        hasNitro = true
-        document.querySelector("#nitroButton").textContent = "Nitro [1]"
-        raceActive = true
-        playerX = 0
-        enemyX = 0
-        root.style.setProperty('--winnerDisplay', "none");
-
-        if (autoGame){
-            document.querySelector("#console").textContent = "CONSOLE: AUTO RACING!!"
-        }else{
-            document.querySelector("#console").textContent = "CONSOLE: RACING!!"
-        }
-        
-
-        //enemy stats(make random)
-        enemyShipSpeed = randomNum(1, 5)
-        enemyShipHandling = randomNum(1, 10)
-        enemyNitro = randomNum(1, 5)
-        enemyHasNitro = true
-
-        enemyShipIco = "1️⃣🛸"
-        playerShipIco = "1️⃣🚀"
-    }
-    
-    function raceOver(){
-        if (raceActive){
-            root.style.setProperty('--winnerDisplay', "unset");
-            raceActive = false
-            if (playerX >= playerShipTrack.length - 1){
-                var gamtgain = randomNum(1, 20)
-                localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) + gamtgain)
-                document.querySelector("#console").textContent = ("CONSOLE: " + "You have gained " + gamtgain + " ☀️!")
-            }else{
-                document.querySelector("#console").textContent = "CONSOLE: You lost :("
-            }
-        }
-        
-    }
-
-    //autoController
-    function autogameFlick(){
-        if (autoGame){
-            autoGame = false
-        }else if (autoGame == false){
-            newRace()
-            autoGame = true
-        }
-    }
-
-    //enemyNitro = randomNum(1, 5)
-    //enemyHasNitro = true
-
-    //bot controller
-    setInterval(shipTick, 500)
-    function shipTick(){
-        if (raceActive){
-            if (randomNum(0, 10) <= enemyShipHandling){
-                enemyX += enemyShipSpeed
-                if (enemyHasNitro){
-                    if (randomNum(1, 5) == 1){
-                        enemyHasNitro = false
-                        enemyX += enemyNitro
-                        enemyShipIco = "🔥🛸"
-                    }
-                }
-            }
-        }
-        
-    }
-
-        //player controller
-    setInterval(playerShipController, 250)
-    function playerShipController(){
-        if (autoGame && raceActive){
-            moveShip()
-        }else if (raceActive == false && autoGame){
-            newRace()
-        }
-        
-    }
-
-
-    //onTick
-    setInterval(onTick, 1);
-    function onTick(){
-        if (autoGame){
-            document.querySelector("#autoButton").textContent = "Auto [on]"
-            document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer☄️"
-        }else{
-            document.querySelector("#autoButton").textContent = "Auto [off]"
-            document.title = "☄️Space Racer☀️"
-        }
-        if (raceActive){
-
-            //visual systme
-            enemyShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
-            playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]
-
-            enemyShipTrack[enemyX] = enemyShipIco
-            playerShipTrack[playerX] = playerShipIco
-
-            enemyShip.textContent = enemyShipTrack.join("")
-            playerShip.textContent = playerShipTrack.join("")
-
-            //end game check
-
-        }
-
-        if (playerX >= playerShipTrack.length - 1 || enemyX >= enemyShipTrack.length - 1){
-            raceOver()
-        }
-    }
-
-    function moveShip(){
-        if (raceActive){
-            //add stats in
-            if (randomNum(0, 10) <= parseInt(localStorage.getItem("SRhandling"))){
-                playerX += parseInt(localStorage.getItem("SRspeed"))
-            }
-        }else{
-            newRace()
-        }
-        
-    }
-
-
-    function nitroUse(){
-        if (hasNitro && raceActive){
-            hasNitro = false
-            playerShipIco = "🔥🚀"
-            playerX += parseInt(localStorage.getItem("SRnitro")) 
-            document.querySelector("#console").textContent = "CONSOLE: NITRO!!"
-            document.querySelector("#nitroButton").textContent = "Nitro [0]"
-        }
-    }
-
-</script>
 </html>

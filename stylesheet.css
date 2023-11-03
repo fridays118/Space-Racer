@@ -1,7 +1,3 @@
-:root{
-    --winnerDisplay: none
-}
-
 html, body {
     max-width: 100%;
     overflow-x: hidden;
@@ -59,6 +55,12 @@ a:hover{
     background-color: black;
 }
 
+#settingMenu{
+    font-size: larger;
+    background-color:black;
+}
+
+
 strong{
     color: red;
 }
@@ -72,6 +74,7 @@ button{
     background-color: black;
     color: aliceblue;
     font-family: mega-trans;
+    margin: 3px;
 }
 
 body{
@@ -87,10 +90,6 @@ body{
     background-repeat: repeat;
     color: aliceblue;
     font-family: mega-trans;
-}
-
-p{
-    font-size: small;
 }
 
 header a{
@@ -112,12 +111,17 @@ header h3{
     background-color: black;
     color: aliceblue;
     width: fit-content;
-    padding: 2vh;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 2vw;
     border-radius: 25px;
     border: 2px dashed whitesmoke;
 }
-#winner{
-    display: var(--winnerDisplay);
+
+#gameplay p{
+    margin: 10px;
+    font-size: 110%;
 }
 
 @font-face {
@@ -128,4 +132,55 @@ header h3{
   @font-face {
     font-family: mega-trans;
     src: url(MegatransdemoRegular.otf);
+  }
+
+
+  #intro{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: black;
+    opacity: .9;
+    width: 40vw;
+  }
+
+  #mainGameArea{
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    #gameplay{
+        padding: 20px;
+        gap: 30px;
+    }
+    #mainGameArea{
+        margin: 15px;
+    }
+    #intro{
+        width: 80vw;
+      }
+  } 
+
+
+  @media only screen and (min-width: 768px) {
+    #gameplay{
+        width: 50vw;
+        font-size: x-large;
+        justify-content: space-between;
+    }
+    p{
+        font-size: larger;
+    }
+    button{
+        font-size: large;
+    }
+    #gameplay h3{
+        font-size: xx-large;
+    }
+    header h3{
+        font-size: x-large;
+    }
+    header a{
+        font-size: large;
+    }
   }
