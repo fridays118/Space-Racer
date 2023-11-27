@@ -44,7 +44,7 @@ header div{
     display: flex;
     gap: 10px;
 }
-header h3{
+#header3{
     margin-left: 10px;
 }
 
@@ -103,7 +103,7 @@ header a{
     font-size: small;
 }
 
-header h3{
+#header3{
     font-size: larger;
 }
 
@@ -145,6 +145,7 @@ header h3{
 #shipMenu p{
     margin: 8px;
 }
+
 
 #settingsMenu{
     background: rgba(0, 0, 54, 0.4);
@@ -238,7 +239,7 @@ header h3{
     #gameplay h3{
         font-size: xx-large;
     }
-    header h3{
+    #header3{
         font-size: x-large;
     }
     header a{
