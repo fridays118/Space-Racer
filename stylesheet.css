@@ -10,27 +10,32 @@ html, body {
 
 footer{
     position: fixed;
-    left: 0;
+    left: -15px;
     bottom: 0;
-    width: 100%;
-    background-color: white;
-    color: black;
+    width: 105%;
+    background: rgba(0, 0, 54, 0.4);
+    color: white;
     text-align: center;
+    border: 1px solid blue;
 }
 
 header{
-    background-color: aliceblue;
+    background: rgba(0, 0, 54, 0.4);
     padding: 1vh;
     width: 100%;
-    color: black;
+    color: white;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
+    border: 1px solid blue;
 }
 header a{
-    color: black;
+    color: white;
     text-decoration: none;
+}
+header a:hover{
+    color: blue;
 }
 
 header div{
@@ -48,16 +53,18 @@ h3, h2, h1{
 }
 
 button:hover{
-    border-color: blue;
-}
-a:hover{
-    color: white;
-    background-color: black;
+    border-color: white;
+    border-radius: 10px;
 }
 
-#settingMenu{
-    font-size: larger;
-    background-color:black;
+#console{
+    background: rgba(0, 0, 54, 0.4);
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    border: 2px solid blue;
+    border-radius: 10px;
+
 }
 
 
@@ -70,8 +77,8 @@ a li{
 }
 
 button{
-    border: 2px solid whitesmoke;
-    background-color: black;
+    border: 2px solid blue;
+    background: rgba(0, 0, 54, 0.4);
     color: aliceblue;
     font-family: mega-trans;
     margin: 3px;
@@ -108,20 +115,54 @@ header h3{
 
 
 #gameplay{
-    background-color: black;
-    color: aliceblue;
+    background: rgba(0, 0, 54, 0.4);
+    color: blue;
     width: fit-content;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 2vw;
     border-radius: 25px;
-    border: 2px dashed whitesmoke;
+    border: 2px solid blue;
+    margin: 0px;
 }
 
 #gameplay p{
     margin: 10px;
     font-size: 110%;
+}
+
+#shipMenu{
+    background: rgba(0, 0, 54, 0.4);
+    border: 2px solid blue;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0px;
+}
+#shipMenu p{
+    margin: 8px;
+}
+
+#settingsMenu{
+    background: rgba(0, 0, 54, 0.4);
+    border: 2px solid blue;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0px;
+}
+#settingsMenu a{
+    color: white;
+    font-size: larger;
+    text-decoration: none;
+}
+#settingsMenu a:hover{
+    color: blue;
 }
 
 @font-face {
@@ -142,6 +183,13 @@ header h3{
     background-color: black;
     opacity: .9;
     width: 40vw;
+    margin-top: 10%;
+    border: 2px solid blue;
+    padding: 10px;
+    border-radius: 25px;
+  }
+  #intro strong{
+    color: blue;
   }
 
   #mainGameArea{
