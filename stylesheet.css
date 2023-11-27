@@ -19,6 +19,14 @@ footer{
     border: 1px solid blue;
 }
 
+#intro a:hover{
+    color: white;
+}
+#intro a{
+    width: fit-content;
+    align-self: center;
+}
+
 header{
     background: rgba(0, 0, 54, 0.4);
     padding: 1vh;
