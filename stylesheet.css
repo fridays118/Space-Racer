@@ -191,8 +191,7 @@ header a{
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: black;
-    opacity: .9;
+    background: rgba(0, 0, 54, 0.8);
     width: 40vw;
     margin-top: 10%;
     border: 2px solid cyan;
