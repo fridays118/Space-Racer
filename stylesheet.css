@@ -13,7 +13,7 @@ footer{
     left: -15px;
     bottom: 0;
     width: 105%;
-    background: rgba(0, 0, 54, 0.4);
+    background: rgba(0, 0, 54, 0.8);
     color: white;
     text-align: center;
     border: 1px solid cyan;
@@ -28,7 +28,7 @@ footer{
 }
 
 header{
-    background: rgba(0, 0, 54, 0.4);
+    background: rgba(0, 0, 54, 0.8);
     padding: 1vh;
     width: 100%;
     color: white;
@@ -88,7 +88,7 @@ a li{
 button{
     border: 2px solid greenyellow;
     padding: 5px;
-    background: rgba(0, 0, 54, 0.4);
+    background: rgba(0, 54, 0, .5);
     color: aliceblue;
     font-family: mega-trans;
     margin: 3px;
