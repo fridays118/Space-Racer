@@ -230,6 +230,9 @@ header a{
         padding: 0px;
         gap: 1px;
     }
+    #gatchaWhole{
+        gap: 2px;
+    }
   } 
   @media only screen and (max-width: 300px) {
     #gameplay{

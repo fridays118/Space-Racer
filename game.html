@@ -204,7 +204,11 @@
     function onTick(){
         if (autoGame){
             document.querySelector("#autoButton").textContent = "Auto [on]"
-            document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer☄️"
+            if (localStorage.getItem("companion") != "nil"){
+                document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer☄️🐶"
+            }else{
+                document.title = "[" + localStorage.getItem("SRcyberGold") + "☀️] Space Racer☄️"
+            }
         }else{
             document.querySelector("#autoButton").textContent = "Auto [off]"
             document.title = "☄️Space Racer☀️"
