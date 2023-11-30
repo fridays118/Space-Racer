@@ -21,14 +21,26 @@
     </header>
 
     <h1>Shop <i class="material-icons">sell</i> </h1>
-    <div id="shipMenu">
-        <div id="gatcha">
-            <p id="suns">☀️: 0</p>
-            <!--There will be random stats which range is based off of the rarity, if theyre ship is better tell them then scrap it for the stats added together-->
-            <button onclick="common()">Common ship [60 ☀️]</button>
-            <button onclick="rare()">Rare ship [120 ☀️]</button>
-            <button onclick="legend()">Legend ship [180 ☀️]</button>
-            <button onclick="epic()">Epic ship [220 ☀️]</button>
+    <p id="suns">☀️: 0</p>
+    <div id="gatchaWhole">
+        <!--SHIPS-->
+        <div id="shipMenu">
+            <div id="gatcha">
+                <button onclick="common()">Common ship [60 ☀️]</button>
+                <button onclick="rare()">Rare ship [120 ☀️]</button>
+                <button onclick="legend()">Legend ship [180 ☀️]</button>
+                <button onclick="epic()">Epic ship [220 ☀️]</button>
+            </div>
+        </div>
+        <!--PETS-->
+        <div id="shipMenu">
+            <div id="gatcha">
+                <!--There will be random stats which range is based off of the rarity, if theyre ship is better tell them then scrap it for the stats added together-->
+                <button onclick="ComPcommon()">Common companion [200 ☀️]</button>
+                <button onclick="ComPrare()">Rare companion [300 ☀️]</button>
+                <button onclick="ComPlegend()">Legend companion [400 ☀️]</button>
+                <button onclick="ComPepic()">Epic companion [500 ☀️]</button>
+            </div>
         </div>
     </div>
 
@@ -54,6 +66,41 @@
         return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
     }
 
+    function makeCompanion(quality){
+        qstring = "MT"
+        if (quality == 1){
+            qstring = "Common"
+        }else if (quality == 2){
+            qstring = "Rare"
+        }else if (quality == 3){
+            qstring = "Legend"
+        }else if (quality == 4){
+            qstring = "Epic"
+        }
+
+        localStorage.setItem("companion", "true")
+        localStorage.setItem("companionSpeed", randomNum(quality, 4))
+        localStorage.setItem("companionNitro", randomNum(quality, 4))
+        localStorage.setItem("companionHandling", randomNum(quality, 4))
+
+        document.querySelector("#console").textContent = "CONSOLE: New " + qstring + " companion obtained!"
+    }
+
+    function purchaseComp(price , QQL){
+        SRCGamt = parseInt(localStorage.getItem("SRcyberGold"))
+        
+        if (SRCGamt >= price){
+            localStorage.setItem("SRcyberGold", parseInt(localStorage.getItem("SRcyberGold")) - price)
+            makeCompanion(QQL)
+        }else if(SRCGamt < price){
+            document.querySelector("#console").textContent = "CONSOLE: You dont have that much!"
+        }else{
+            document.querySelector("#console").textContent = "CONSOLE: !"
+
+        }
+        
+    }
+
     function makeShip(quality){
         qstring = "MT"
         if (quality == 1){
@@ -68,7 +115,7 @@
 
         
         localStorage.setItem("SRspeed", randomNum(quality, 4))
-        localStorage.setItem("SRhandling", randomNum(quality, 10))
+        localStorage.setItem("SRhandling", randomNum(quality, 6))
         localStorage.setItem("SRnitro", randomNum(quality, 3))
         
         document.querySelector("#console").textContent = "CONSOLE: New " + qstring + " ship purchased! See it in the ships tab."
@@ -102,6 +149,19 @@
     }
     function epic(){
         purchaseShip(220, 4)
+    }
+
+    function ComPcommon(){
+        purchaseComp(200, 1)
+    }
+    function ComPrare(){
+        purchaseComp(300, 2)
+    }
+    function ComPlegend(){
+        purchaseComp(400, 3)
+    }
+    function ComPepic(){
+        purchaseComp(500, 4)
     }
 
 

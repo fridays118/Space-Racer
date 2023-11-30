@@ -31,9 +31,10 @@
     </div>
 
         <div style="display: flex; flex-direction: column; gap: 3px;">
-            <button onclick="moveShip()"><i class="material-icons">eject</i></button>
+            <button onclick="clickMoveShip()"><i class="material-icons">eject</i></button>
             <button id="nitroButton" onclick="nitroUse()">Nitro [1]</button>
             <button id="autoButton" onclick="autogameFlick()">Auto</button>
+            <button onclick="pauseGame()"><i class="material-icons">pause</i></button>
         </div>
     </div>
 
@@ -50,8 +51,14 @@
 <!--JAVASCRIPT-->
 
 <script>
+
     //getting css vars
     let root = document.documentElement;
+
+    //pausing
+    function pauseGame(){
+        alert("Until you close this alert the game will stay paused")
+    }
 
     //random
     function randomNum(min, max) {
@@ -68,11 +75,16 @@
         RESET()
     }
 
+    //hard reset
     function RESET(){
         localStorage.setItem("SRspeed", 1)
         localStorage.setItem("SRhandling", 1)
         localStorage.setItem("SRnitro", 1)
         localStorage.setItem("SRcyberGold", 0)
+        localStorage.setItem("companion", "nil")
+        localStorage.setItem("companionSpeed", 0)
+        localStorage.setItem("companionNitro", 0)
+        localStorage.setItem("companionHandling", 0)
         location.reload()
     }
 
@@ -91,6 +103,15 @@
         playerShipTrack = ["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "🏁"]
 
 
+    //new message on start
+    window.onload = function() {
+        // The page is fully loaded
+        if (localStorage.getItem("companion") != "nil"){
+            document.querySelector("#console").textContent = "CONSOLE: Your companion is rooting for you! 🐶"
+        }else{
+            document.querySelector("#console").textContent = "CONSOLE: Lets see how your 🚀 does"
+        }
+    }
     //new race
     function newRace(){
         hasNitro = true
@@ -116,6 +137,7 @@
         playerShipIco = "1️⃣🚀"
     }
     
+    //race over
     function raceOver(){
         if (raceActive){
             raceActive = false
@@ -206,11 +228,21 @@
             playerShip.textContent = playerShipTrack.join("")
     }
 
+    //move ship function on button click to prevent auto and normal clicking
+    function clickMoveShip(){
+        if (autoGame){
+            autoGame = false
+            alert("You cant click and have auto on at the same time")
+        }
+        moveShip()
+    }
+
+    //moving the ship
     function moveShip(){
         if (raceActive){
             //add stats in
-            if (randomNum(0, 10) <= parseInt(localStorage.getItem("SRhandling"))){
-                playerX += parseInt(localStorage.getItem("SRspeed"))
+            if (randomNum(0, 10) <= parseInt(localStorage.getItem("SRhandling")) + parseInt(localStorage.getItem("companionHandling"))){
+                playerX += parseInt(localStorage.getItem("SRspeed")) + parseInt(localStorage.getItem("companionSpeed"))
             }
         }else{
             newRace()
@@ -218,12 +250,13 @@
         
     }
 
-
+    
+    //using nitro
     function nitroUse(){
         if (hasNitro && raceActive){
             hasNitro = false
             playerShipIco = "🔥🚀"
-            playerX += parseInt(localStorage.getItem("SRnitro")) 
+            playerX += parseInt(localStorage.getItem("SRnitro")) + parseInt(localStorage.getItem("companionNitro"))
             document.querySelector("#console").textContent = "CONSOLE: NITRO!!"
             document.querySelector("#nitroButton").textContent = "Nitro [0]"
         }

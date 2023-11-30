@@ -53,9 +53,19 @@
 
     setInterval(onTick, 1)
     function onTick(){
-        document.querySelector("#speedStat").textContent = "Speed: " + localStorage.getItem("SRspeed") + " / 4"
-        document.querySelector("#handlingStat").textContent = "Handling: " + localStorage.getItem("SRhandling") + " / 10"
-        document.querySelector("#nitroStat").textContent = "Nitro: " + localStorage.getItem("SRnitro") + " / 3"
+        var speedBonus = 0
+        var handleBonus = 0
+        var nitroBonus = 0
+        if (localStorage.getItem("companion") != "nil"){
+            speedBonus = localStorage.getItem("companionSpeed")
+            handleBonus = localStorage.getItem("companionHandling")
+            nitroBonus = localStorage.getItem("companionNitro")
+        }
+
+
+        document.querySelector("#speedStat").textContent = "Speed: " + localStorage.getItem("SRspeed") + " [+" + speedBonus + "] (max 8)"
+        document.querySelector("#handlingStat").textContent = "Handling: " + localStorage.getItem("SRhandling") + " [+" + handleBonus + "] (max 10)"
+        document.querySelector("#nitroStat").textContent = "Nitro: " + localStorage.getItem("SRnitro") + " [+" + nitroBonus + "] (max 7)"
         document.querySelector("#suns").textContent = "☀️: " + localStorage.getItem("SRcyberGold")
     }
 
@@ -76,11 +86,11 @@
                 }
 
             }else if (rngStat == 2){
-                if (parseInt(localStorage.getItem("SRhandling")) + rngAmt < 10){
+                if (parseInt(localStorage.getItem("SRhandling")) + rngAmt < 6){
                     localStorage.setItem("SRhandling", parseInt(localStorage.getItem("SRhandling")) + rngAmt)
                     document.querySelector("#console").textContent = "CONSOLE: Handling [+]"
                 }else{
-                    localStorage.setItem("SRhandling", 10)
+                    localStorage.setItem("SRhandling", 6)
                     document.querySelector("#console").textContent = "CONSOLE: Handling [[MAX]]"
                 }
             }else if (rngStat == 3){

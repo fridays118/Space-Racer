@@ -7,7 +7,10 @@ html, body {
     -webkit-text-select: none;
     -webkit-user-select: none;
 }
-
+#gatchaWhole{
+    display: flex;
+    gap: 10%;
+}
 footer{
     position: fixed;
     left: -15px;
@@ -217,6 +220,16 @@ header a{
     #intro{
         width: 80vw;
       }
+    #gatcha{
+        gap: 0px;
+    }
+    #shipMenu{
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        padding: 0px;
+        gap: 1px;
+    }
   } 
   @media only screen and (max-width: 300px) {
     #gameplay{
